@@ -1,1 +1,1 @@
-Android app to test out activity recognition api
+Android app to test activity recognition api
