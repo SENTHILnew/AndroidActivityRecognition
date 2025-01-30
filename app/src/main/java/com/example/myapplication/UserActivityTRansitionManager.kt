@@ -51,8 +51,8 @@ class UserActivityTransitionManager(context: Context) {
     private val pendingIntent by lazy {
         PendingIntent.getBroadcast(
             context,
-            1000,
-            Intent("USER-ACTIVITY-DETECTION-INTENT-ACTION"),
+            0,
+            Intent(TRANSITIONS_RECEIVER_ACTION),
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                 PendingIntent.FLAG_CANCEL_CURRENT
             } else {

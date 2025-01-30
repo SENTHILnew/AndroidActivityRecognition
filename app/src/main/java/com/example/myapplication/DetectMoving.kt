@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.currentCompositionErrors
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -65,7 +64,7 @@ fun DetectMovingContent() {
         }
     }
 
-    UserActivityBroadcastReceiver("USER-ACTIVITY-DETECTION-INTENT-ACTION") {
+    UserActivityBroadcastReceiver(TRANSITIONS_RECEIVER_ACTION) {
         currentActivity.value = it
     }
 
@@ -80,6 +79,6 @@ fun DetectMovingContent() {
                 text = "CurrentActivity is = ${currentActivity.value}",
             )
         }
-        Text(if(trackingActivity.value)"Tracking Activity" else "Not Tracking Activity")
+        Text(if (trackingActivity.value) "Tracking Activity" else "Not Tracking Activity")
     }
 }

@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Context.RECEIVER_NOT_EXPORTED
@@ -15,6 +16,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.location.ActivityTransitionResult
 
+@SuppressLint("InlinedApi")
 @Composable
 fun UserActivityBroadcastReceiver(
     systemAction: String,
@@ -24,7 +26,7 @@ fun UserActivityBroadcastReceiver(
     val currentSystemOnEvent by rememberUpdatedState(systemEvent)
 
     DisposableEffect(context, systemAction) {
-        val intentFilter = IntentFilter(systemAction)
+        val intentFilter = IntentFilter(TRANSITIONS_RECEIVER_ACTION)
         val broadcast = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val result = intent?.let { ActivityTransitionResult.extractResult(it) } ?: return
@@ -37,12 +39,7 @@ fun UserActivityBroadcastReceiver(
                 currentSystemOnEvent(resultStr)
             }
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.registerReceiver(broadcast, intentFilter, RECEIVER_NOT_EXPORTED)
-        }
-        else{
-            context.registerReceiver(broadcast, intentFilter)
-        }
+        context.registerReceiver(broadcast, intentFilter, RECEIVER_NOT_EXPORTED)
         onDispose {
             context.unregisterReceiver(broadcast)
         }
